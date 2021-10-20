@@ -1,0 +1,38 @@
+pipeline {
+    agent {
+        label "oraclevm"
+    }
+
+    tools{
+        nodejs "nodejs"
+    }
+
+    stages {
+        stage("Checkout"){
+            steps{
+                checkout scm
+            }
+        }
+        stage("Compressing"){
+            parallel {
+                stage("JS compressing"){
+                    steps{
+                        sh 'cat www/js/* | uglifyjs -o www/min/merged-and-compressed.js --compress'
+                    }
+                }
+                stage("CSS compressing"){
+                    steps{
+                        sh 'cat www/css/* | cleancss -o www/min/merged-and-minified.css'
+                    }
+                }
+            }
+        }
+        stage("Archiving artifacts"){
+            steps{
+                sh "mkdir -p artifacts"
+                sh "tar --exclude=.git --exclude=www/js --exclude=www/css --exclude=artifacts -czvf artifacts/result.tar.gz ."
+                archiveArtifacts artifacts: "artifacts/result.tar.gz", fingerprint: true
+            }
+        }
+    }
+}
