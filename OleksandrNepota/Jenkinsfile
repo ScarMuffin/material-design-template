@@ -1,7 +1,8 @@
 node('oraclevm') {
    env.nodejs = tool 'nodejs'
-   env.PATH = ‘${env.nodejs}/bin:${env.PATH}’
-     stage (‘checkout){
+   env.PATH="${env.nodejs}/bin:${env.PATH}"
+
+     stage (‘checkout){ 
         checkout scm
     
      }
