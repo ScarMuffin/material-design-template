@@ -1,0 +1,21 @@
+node('oraclevm') {
+   env.nodejs = tool 'nodejs'
+   env.PATH="${env.nodejs}/bin:${env.PATH}"
+
+     stage('checkout'){ 
+        checkout scm
+    
+     }
+     stage('Compressing')
+     {
+         compress = ["JS" : { sh 'cat www/js/* | ${nodejs}/bin/uglifyjs -o www/min/merged-and-compressed.js --compress'},
+                     "CSS" : { sh 'cat www/css/* | ${nodejs}/bin/cleancss -o www/min/merged-and-minified.css'}]
+          parallel compress
+     }
+     stage('Archiving artifacts')
+     {
+        sh "mkdir -p artifacts"
+        sh "tar --exclude=.git --exclude=www/js --exclude=www/css --exclude=artifacts -czvf artifacts/result.tar.gz ."
+        archiveArtifacts artifacts: "artifacts/result.tar.gz", fingerprint: true
+     }
+}
