@@ -43,6 +43,7 @@ After that go http://YOUR_JENKINS_URL/computer/new and create a new node Launch 
 In the "Host Key Verification Strategy" you should choose Manually trusted key Verification Strategy and click on "Require manual verification of initial connection"
 <img src="https://github.com/ScarMuffin/material-design-template/blob/master/Week2_CI-CD_tools/Screenshot%202021-10-18%20at%2000.13.16.png" border="0"/></a>
 After that you should confirm that connection and that it will work and you can see it in your nodes list.
+<img src="https://github.com/ScarMuffin/material-design-template/blob/e0ca24132a582f1d8b05ced7bb3364b0e358c441/Week2_CI-CD_tools/Screenshot%202021-10-21%20at%2000.41.28.png" border="0"/></a>
 
 <h1>3. Configure tools – NodeJS</h1>
 
@@ -134,3 +135,5 @@ node('oraclevm') {
      }
 }
 ```
+
+
