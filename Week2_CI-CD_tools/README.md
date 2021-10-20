@@ -108,3 +108,29 @@ Then you should go to your github account and go to your repository then click o
 <img src="https://github.com/ScarMuffin/material-design-template/blob/master/Week2_CI-CD_tools/Screenshot%202021-10-18%20at%2000.51.04.png" border="0"/></a>
 
 
+<h1>* Use Scripted pipeline instead of declarative</h1>
+
+That is code of scripted pipeline:
+```
+node('oraclevm') {
+   env.nodejs = tool 'nodejs'
+   env.PATH="${env.nodejs}/bin:${env.PATH}"
+
+     stage(‘checkout’){ 
+        checkout scm
+    
+     }
+     stage('Compressing')
+     {
+         compress = ["JS" : { sh 'cat www/js/* | ${nodejs}/bin/uglifyjs -o www/min/merged-and-compressed.js --compress'},
+                     "CSS" : { sh 'cat www/css/* | ${nodejs}/bin/cleancss -o www/min/merged-and-minified.css'}]
+          parallel compress
+     }
+     stage('Archiving artifacts')
+     {
+        sh "mkdir -p artifacts"
+        sh "tar --exclude=.git --exclude=www/js --exclude=www/css --exclude=artifacts -czvf artifacts/result.tar.gz ."
+        archiveArtifacts artifacts: "artifacts/result.tar.gz", fingerprint: true
+     }
+}
+```
