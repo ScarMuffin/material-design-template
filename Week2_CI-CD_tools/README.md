@@ -30,6 +30,8 @@ For installs plugin you should go to "Manage Jenkins" > "Manage plugins" and ins
 
 For that task I took Oracle VM IP: 132.145.235.148
 
+<img src="https://github.com/ScarMuffin/material-design-template/blob/08c37773335b3de4c3f780ebd4c8b27dc892e5d1/Week2_CI-CD_tools/Screenshot%202021-10-21%20at%2000.56.13.png" border="0"/></a>
+
 ```
 sudo apt-get update
 sudo apt-get -y install openjdk-8-jre git
